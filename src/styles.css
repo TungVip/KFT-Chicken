@@ -1,0 +1,69 @@
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.list {
+  display: flex;
+  justify-content: center;
+  overflow: scroll;
+  box-sizing: border-box;
+  width: 100%;
+  /* transition: scroll-behavior 0.5s ease-in-out; */
+}
+
+.item {
+  height: auto; /* Adjust this based on your item height */
+  margin: 0 10px;
+  padding: 20px;
+  background-color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  border-radius: 10px;
+  flex: 0 0 25%;
+}
+.image-container {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.zoom-image {
+  transition: transform 0.7s ease-in-out;
+}
+
+.image-container:hover .zoom-image {
+  transform: scale(1.1); /* Adjust the scale factor to control the zoom level */
+}
+
+  .arrow {
+    border: none;
+    position: absolute;
+    cursor: pointer;
+    background-color: transparent;
+    z-index: 10;
+  }
+
+.left {
+  left: 1vw;
+}
+
+.right {
+  right: 1vw;
+}
+
+.menu {
+  text-align: center;
+  color: #a22a2a;
+  font-weight: bolder;
+  margin-bottom: 100px;
+}
+
+.App {
+  padding: 20px 0; 
+  background-image: url("../public/home-menu-bg.jpg");
+}
