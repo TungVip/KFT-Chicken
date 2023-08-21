@@ -2,30 +2,29 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
   position: relative;
+  overflow: hidden;
 }
 
 .list {
   display: flex;
-  justify-content: center;
-  overflow: scroll;
+  overflow: hidden;
   box-sizing: border-box;
-  width: 100%;
+ 
   /* transition: scroll-behavior 0.5s ease-in-out; */
 }
 
 .item {
   height: auto; /* Adjust this based on your item height */
-  margin: 0 10px;
-  padding: 20px;
+  margin-right: 1vw;
+  padding: 10px 0.5vw;
   background-color: #ccc;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 18px;
   border-radius: 10px;
-  flex: 0 0 25%;
+  flex: 0 0 23vw;
 }
 .image-container {
   display: inline-block;

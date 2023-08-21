@@ -95,58 +95,44 @@ function NumberFormatted({ value }) {
 //     </div>
 //   );
 // };
-const Carousel = ({ fullItems}) => {
-  const arrLength = fullItems.length;
-  const [listRef,setListRef] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const itemWidth = 400; // Adjust this based on your item width
+const Carousel = ({ fullItems, setFullItems}) => {
+  const itemRefs = useRef([]);
+  const [currentIndex, setCurrentIndex] = useState(3);
+  const itemWidth = `${23}vw`; // Adjust this based on your item width
   const autoScrollInterval = 5000; // Auto-scroll interval in milliseconds
-  
-  const sizeLg = 4;
-  const sizeMd = 3;
-  const sizeXs = 1;
-  const arr = Array.from({ length: sizeLg }, (_, index) => index);
-  // Perform inline operations on the array
-  
-  React.useEffect(() => {
-    // add or remove refs
-    const reff = Array(arrLength).fill().map((_, i) => listRef[i] || createRef());
-    console.log("reff: ", reff);
-    setListRef(reff);
-  }, [arrLength]);
 
-  const itemLg = arr.map(item => fullItems[(currentIndex+item)%(fullItems.length)]);  
-  useEffect(() => {
-    const scrollInterval = setInterval(() => {
-      const nextIndex = (currentIndex + 1) % fullItems.length;
-      setCurrentIndex(nextIndex);
-    }, autoScrollInterval);
+  // useEffect(() => {
+  //   const scrollInterval = setInterval(() => {
+  //     const nextIndex = (currentIndex + 1) % fullItems.length;
+  //     setCurrentIndex(nextIndex);
+  //   }, autoScrollInterval);
 
-    return () => {
-      clearInterval(scrollInterval);
-    };
-  }, [currentIndex]);
+  //   return () => {
+  //     clearInterval(scrollInterval);
+  //   };
+  // }, [currentIndex]);
 
   useEffect(() => {
-    console.log("ListRef: ", listRef);
-    console.log("ListRef current I: ", listRef[currentIndex]);
-    listRef[currentIndex]?.scrollIntoView();
+    // console.log(currentIndex);
+    itemRefs.current[3]?.scrollIntoView({behavior: "smooth", inline: "end"});
     // listRef.current.scrollTo({ left: currentIndex * itemWidth, behavior: 'smooth' });
     // listRef.current.scrollTo({ left: "10px", behavior: 'smooth' });
     // console.log("Current Index ", currentIndex);
   }, [currentIndex]);
 
   const handleClickRight = () => {
-    const nextIndex = (currentIndex + 1) % fullItems.length;
-    setCurrentIndex(nextIndex);
+    // let nextIndex = (currentIndex + 1) % fullItems.length;
+    // if (nextIndex === 0) nextIndex = 3;
+    // setCurrentIndex(nextIndex);
+    const temp_arr = [...fullItems.slice(1), fullItems[0]];
+    setFullItems(temp_arr);
   };
 
   const handleClickLeft = () => {
-    const prevIndex = (currentIndex - 1 + fullItems.length) % fullItems.length;
+    let prevIndex = (currentIndex - 1 + fullItems.length) % fullItems.length;
+    if (prevIndex < 3) prevIndex = fullItems.length-1;
     setCurrentIndex(prevIndex);
   };
-
-  
 
 
   return (
@@ -159,7 +145,7 @@ const Carousel = ({ fullItems}) => {
           <div
             className="item"
             key={index}
-            rel={listRef[index]}
+            ref={el => (itemRefs.current[index] = el)}
           >
             <CustomItem source={item.source} name={item.name} price={item.price} newPrice={item.newPrice}/>
           </div>
@@ -174,23 +160,23 @@ const Carousel = ({ fullItems}) => {
 export default function App() {
 
   // Add item here
-  const fullItems = [
-    {source: "/Combo_Vui_Ve_B.png", name: "Combo Vui Ve B", price: 150000, newPrice: 120000},
-    {source: "/Combo_Vui_Ve_D.png", name: "Combo Vui Ve D", price: 247000, newPrice: 199000},
+  const [fullItems, setFullItems] = useState([
+    {source: "/Combo_Vui_Ve_B.png", name: "Combo Vui Ve A", price: 150000, newPrice: 120000},
+    {source: "/Combo_Vui_Ve_D.png", name: "Combo Vui Ve B", price: 247000, newPrice: 199000},
     {source: "/Combo_Vui_Ve_B.png", name: "Combo Vui Ve C", price: 180000, newPrice: 160000},
     {source: "/Combo_Vui_Ve_D.png", name: "Combo Vui Ve D", price: 247000, newPrice: 199000},
-    {source: "/Combo_Vui_Ve_B.png", name: "Combo Vui Ve B", price: 150000, newPrice: 120000},
-    {source: "/Combo_Vui_Ve_D.png", name: "Combo Vui Ve D", price: 247000, newPrice: 199000},
-    {source: "/Combo_Vui_Ve_B.png", name: "Combo Vui Ve B", price: 150000, newPrice: 120000},
-    {source: "/Combo_Vui_Ve_D.png", name: "Combo Vui Ve D", price: 247000, newPrice: 199000},
-    {source: "/Combo_Vui_Ve_B.png", name: "Combo Vui Ve B", price: 150000, newPrice: 120000},
-    {source: "/Combo_Vui_Ve_D.png", name: "Combo Vui Ve D", price: 247000, newPrice: 199000},
-  ];
+    {source: "/Combo_Vui_Ve_B.png", name: "Combo Vui Ve E", price: 150000, newPrice: 120000},
+    {source: "/Combo_Vui_Ve_D.png", name: "Combo Vui Ve F", price: 247000, newPrice: 199000},
+    {source: "/Combo_Vui_Ve_B.png", name: "Combo Vui Ve G", price: 150000, newPrice: 120000},
+    {source: "/Combo_Vui_Ve_D.png", name: "Combo Vui Ve H", price: 247000, newPrice: 199000},
+    {source: "/Combo_Vui_Ve_B.png", name: "Combo Vui Ve I", price: 150000, newPrice: 120000},
+    {source: "/Combo_Vui_Ve_D.png", name: "Combo Vui Ve J", price: 247000, newPrice: 199000},
+  ]);
 
   return (
     <div className="App">
       <h1 className='menu'>TODAY'S MENUS</h1>
-      <Carousel fullItems={fullItems} />
+      <Carousel fullItems={fullItems} setFullItems={setFullItems}/>
 
     </div>
 
